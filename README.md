@@ -1,2 +1,2 @@
-# Rover
-A Rover kata to add some design patterns
+# Mars Rover kata
+A kata to add some design patterns
