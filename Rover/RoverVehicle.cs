@@ -2,75 +2,40 @@
 
 public class RoverVehicle
 {
-    private string _direction;
-    private int _x;
-    private int _y;
+    private IDirectionState _direction;
+    private Position _position;
 
     public RoverVehicle()
     {
-        _direction = "N";
+        _direction = new NorthDirection();
+        _position = new Position(0,0);
     }
 
-    private void Move()
+    public void RotateLeft()
     {
-        switch (_direction)
-        {
-            case "N":
-                _y++;
-                break;
-            case "W":
-                _x--;
-                break;
-            case "S":
-                _y--;
-                break;
-            case "E":
-                _x++;
-                break;
-        }
+        _direction = _direction.RotateLeft();
+    }
+    
+    public void RotateRight()
+    {
+        _direction = _direction.RotateRight();
+    }
+
+    public void Move()
+    {
+        _position = _direction.Move(_position);
     }
     
     public string Execute(string command)
     {
-
+        var commandParser = new CommandParser(AvailableCommands.List);
+        
         foreach (var c in command.ToCharArray())
         {
-            switch (c)
-            {
-                case 'L':
-                    _direction = RotateLeft();  
-                    continue;
-                case 'R':
-                    _direction = RotateRight();
-                    break;
-                case 'M':
-                    Move();
-                    break;
-            }
+            var commandToExecute = commandParser.ParseCommand(c.ToString());
+            commandToExecute.Execute(this);
         }
         
-        return _x + ":" + _y + ":" + _direction;
-    }
-    
-    private string RotateLeft()
-    {
-        if (_direction == "N")
-            return "W";
-        if (_direction == "W")
-            return "S";
-        if (_direction == "S")
-            return "E";
-        return "N";
-    }
-    
-    private string RotateRight()
-    {
-        if (_direction == "N")
-            return "E";
-        if (_direction == "W")
-            return "N";
-        if (_direction == "S")
-            return "W";
-        return "S";
+        return _position + ":" + _direction;
     }
 }
