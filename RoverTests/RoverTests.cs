@@ -1,6 +1,7 @@
 using Rover;
 using Xunit;
 
+
 namespace RoverTests;
 
 public class RoverShould
@@ -13,12 +14,12 @@ public class RoverShould
     public void RotateLeft(string command, string result)
     {
         var rover = new RoverVehicle();
-        
+
         var status = rover.Execute(command);
-        
+
         Assert.Equal(result, status);
     }
-    
+
     [Theory]
     [InlineData("R","0:0:E")]
     [InlineData("RR","0:0:S")]
@@ -27,12 +28,12 @@ public class RoverShould
     public void RotateRight(string command, string result)
     {
         var rover = new RoverVehicle();
-        
+
         var status = rover.Execute(command);
-        
+
         Assert.Equal(result, status);
     }
-    
+
     [Theory]
     [InlineData("M","0:1:N")]
     [InlineData("LM","-1:0:W")]
@@ -42,9 +43,9 @@ public class RoverShould
     public void Moves(string command, string result)
     {
         var rover = new RoverVehicle();
-        
+
         var status = rover.Execute(command);
-        
+
         Assert.Equal(result, status);
     }
 }
